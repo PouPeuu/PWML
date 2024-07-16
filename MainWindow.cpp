@@ -25,7 +25,12 @@ MainWindow::MainWindow()
     
     set_title("Primitive Wings Mod Loader");
     set_default_size(800, 600);
-    
+
+    auto css_provider = Gtk::CssProvider::create();
+    css_provider->load_from_path("style.css");
+
+    Gtk::StyleProvider::add_provider_for_display(get_display(), css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
     set_child(mainbox);
 
     mainbox.append(modlist_box);

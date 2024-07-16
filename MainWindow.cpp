@@ -24,7 +24,7 @@ MainWindow::MainWindow()
     modlist_heading("<b>Mods:</b>", Gtk::Align::START) {
     
     set_title("Primitive Wings Mod Loader");
-    set_default_size(600, 400);
+    set_default_size(800, 600);
     
     set_child(mainbox);
 

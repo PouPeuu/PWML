@@ -52,6 +52,7 @@ MainWindow::MainWindow()
     selection_model->set_can_unselect(true);
     modlist_view.set_model(selection_model);
     modlist_view.add_css_class("data-table");
+    modlist_view.add_css_class("modlist-view-frame");
 
     auto factory = Gtk::SignalListItemFactory::create();
     factory->signal_setup().connect(

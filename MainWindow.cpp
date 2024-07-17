@@ -21,10 +21,17 @@ string read_file(string path) {
 MainWindow::MainWindow()
 :   mainbox(Gtk::Orientation::HORIZONTAL),
     modlist_box(Gtk::Orientation::VERTICAL),
-    modlist_heading("<b>Mods:</b>", Gtk::Align::START) {
+    alltheshit_box(Gtk::Orientation::VERTICAL),
+    modlist_heading("<b>Mods:</b>", Gtk::Align::START),
+    paned(Gtk::Orientation::HORIZONTAL),
+    mod_description("Lärp") {
+
+    int w, h;
+    w = 800;
+    h = 600;
     
     set_title("Primitive Wings Mod Loader");
-    set_default_size(800, 600);
+    set_default_size(w, h);
 
     auto css_provider = Gtk::CssProvider::create();
     css_provider->load_from_path("style.css");
@@ -33,7 +40,17 @@ MainWindow::MainWindow()
 
     set_child(mainbox);
 
-    mainbox.append(modlist_box);
+    mainbox.append(paned);
+    paned.set_start_child(modlist_box);
+    paned.set_end_child(alltheshit_box);
+    paned.set_position(w/3);
+    
+    mod_description.set_use_markup();
+    mod_description.set_wrap();
+    mod_description.set_halign(Gtk::Align::START);
+    
+    alltheshit_box.set_margin(10);
+    alltheshit_box.append(mod_description);
 
     modlist_heading.set_use_markup();
     modlist_box.set_margin(10);

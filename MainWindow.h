@@ -9,10 +9,15 @@ class MainWindow : public Gtk::Window {
 		void on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item);
 
 		Gtk::Box mainbox;
+		Gtk::Paned paned;
+		
 		Gtk::Box modlist_box;
 		Gtk::Label modlist_heading;
 		Gtk::ScrolledWindow modlist_scrollwindow;
 		Gtk::ListView modlist_view;
+
+		Gtk::Box alltheshit_box;
+		Gtk::Label mod_description;
 
 		Glib::RefPtr<Gtk::StringList> modlist_names;
 	public:

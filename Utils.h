@@ -9,8 +9,8 @@
 #include <vector>
 
 namespace Utils {
-    std::string read_file(std::string filepath);
-    std::vector<std::string> list_files(std::string filepath);
-    std::string get_executable_dir();
+    std::string read_file(std::filesystem::path filepath);
+    std::vector<std::filesystem::path> list_files(std::filesystem::path filepath);
+    std::filesystem::path get_executable_dir();
 }
 #endif

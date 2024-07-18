@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-std::string Utils::read_file(std::string filepath) {
+std::string Utils::read_file(std::filesystem::path filepath) {
     std::ifstream file(filepath);
 
     if (!file.is_open()) {
@@ -16,8 +16,8 @@ std::string Utils::read_file(std::string filepath) {
     return contents;
 }
 
-std::vector<std::string> Utils::list_files(std::string path) {
-    std::vector<std::string> paths;
+std::vector<std::filesystem::path> Utils::list_files(std::filesystem::path path) {
+    std::vector<std::filesystem::path> paths;
     try {
         for (const auto& entry : std::filesystem::directory_iterator(path)) {
             paths.push_back(entry.path());
@@ -34,7 +34,7 @@ std::vector<std::string> Utils::list_files(std::string path) {
 #include <windows.h>
 #include <algorithm>
 
-std::string Utils::get_executable_dir() {
+std::filesystem::path Utils::get_executable_dir() {
     char buffer[MAX_PATH];
     GetModuleFileName(NULL, buffer, MAX_PATH);
     std::string path(buffer);
@@ -46,7 +46,7 @@ std::string Utils::get_executable_dir() {
 #include <unistd.h>
 #include <limits.h>
 
-std::string Utils::get_executable_dir() {
+std::filesystem::path Utils::get_executable_dir() {
     char buffer[PATH_MAX];
     ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
     if (len != -1) {
@@ -55,14 +55,14 @@ std::string Utils::get_executable_dir() {
         size_t pos = path.find_last_of("/");
         return path.substr(0, pos);
     }
-    return std::string();
+    return "";
 }
 
 #elif defined(__APPLE__)
 #include <mach-o/dyld.h>
 #include <vector>
 
-std::string Utils::get_executable_dir() {
+std::filesystem::path Utils::get_executable_dir() {
     uint32_t size = 0;
     _NSGetExecutablePath(nullptr, &size);  // Get the size needed
     std::vector<char> buffer(size);
@@ -71,7 +71,7 @@ std::string Utils::get_executable_dir() {
         size_t pos = path.find_last_of("/");
         return path.substr(0, pos);
     }
-    return std::string();
+    return "";
 }
 
 #else

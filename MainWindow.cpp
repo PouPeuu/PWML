@@ -64,7 +64,7 @@ MainWindow::MainWindow()
     modlist_box.append(modlist_heading);
 
     modlist_scrollwindow.set_child(modlist_view);
-    modlist_scrollwindow.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
+    modlist_scrollwindow.set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
     modlist_scrollwindow.set_expand();
 
     modlist_box.append(modlist_scrollwindow);
@@ -83,6 +83,7 @@ MainWindow::MainWindow()
     modlist_view.set_model(selection_model);
     modlist_view.add_css_class("data-table");
     modlist_view.add_css_class("modlist-view-frame");
+    modlist_view.set_halign(Gtk::Align::START);
 
     auto factory = Gtk::SignalListItemFactory::create();
     factory->signal_setup().connect(
@@ -93,7 +94,9 @@ MainWindow::MainWindow()
 }
 
 void MainWindow::on_setup_label(const Glib::RefPtr<Gtk::ListItem>& list_item) {
-    list_item->set_child(*Gtk::make_managed<Gtk::Label>("", Gtk::Align::START));
+    auto label = Gtk::make_managed<Gtk::Label>("", Gtk::Align::START);
+    label->set_ellipsize(Pango::EllipsizeMode::END);
+    list_item->set_child(*label);
 }
 
 void MainWindow::on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item) {

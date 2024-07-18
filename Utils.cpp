@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-std::string read_file(std::string filepath) {
+std::string Utils::read_file(std::string filepath) {
     std::ifstream file(filepath);
 
     if (!file.is_open()) {
@@ -16,7 +16,7 @@ std::string read_file(std::string filepath) {
     return contents;
 }
 
-std::vector<std::string> list_files(std::string path) {
+std::vector<std::string> Utils::list_files(std::string path) {
     std::vector<std::string> paths;
     try {
         for (const auto& entry : std::filesystem::directory_iterator(path)) {
@@ -34,7 +34,7 @@ std::vector<std::string> list_files(std::string path) {
 #include <windows.h>
 #include <algorithm>
 
-std::string get_executable_dir() {
+std::string Utils::get_executable_dir() {
     char buffer[MAX_PATH];
     GetModuleFileName(NULL, buffer, MAX_PATH);
     std::string path(buffer);
@@ -46,7 +46,7 @@ std::string get_executable_dir() {
 #include <unistd.h>
 #include <limits.h>
 
-std::string get_executable_dir() {
+std::string Utils::get_executable_dir() {
     char buffer[PATH_MAX];
     ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
     if (len != -1) {
@@ -62,7 +62,7 @@ std::string get_executable_dir() {
 #include <mach-o/dyld.h>
 #include <vector>
 
-std::string get_executable_dir() {
+std::string Utils::get_executable_dir() {
     uint32_t size = 0;
     _NSGetExecutablePath(nullptr, &size);  // Get the size needed
     std::vector<char> buffer(size);

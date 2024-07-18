@@ -8,8 +8,9 @@
 #include <filesystem>
 #include <vector>
 
-std::string read_file(std::string filepath);
-std::vector<std::string> list_files(std::string filepath);
-std::string get_executable_dir();
-
+namespace Utils {
+    std::string read_file(std::string filepath);
+    std::vector<std::string> list_files(std::string filepath);
+    std::string get_executable_dir();
+}
 #endif

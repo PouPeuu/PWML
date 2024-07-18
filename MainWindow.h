@@ -7,6 +7,7 @@ class MainWindow : public Gtk::Window {
 	protected:
 		void on_setup_label(const Glib::RefPtr<Gtk::ListItem>& list_item);
 		void on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item);
+		void on_selection_changed(guint position, guint n_items);
 
 		Gtk::Box mainbox;
 		Gtk::Paned paned;
@@ -17,9 +18,11 @@ class MainWindow : public Gtk::Window {
 		Gtk::ListView modlist_view;
 
 		Gtk::Box alltheshit_box;
+		Gtk::ScrolledWindow mod_description_scrollwindow;
 		Gtk::Label mod_description;
 
 		Glib::RefPtr<Gtk::StringList> modlist_names;
+		Glib::RefPtr<Gtk::SingleSelection> selection_model;
 	public:
 		MainWindow();
 };

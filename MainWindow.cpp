@@ -25,7 +25,7 @@ MainWindow::MainWindow()
     alltheshit_box(Gtk::Orientation::VERTICAL),
     modlist_heading("<b>Mods:</b>", Gtk::Align::START),
     paned(Gtk::Orientation::HORIZONTAL),
-    mod_description("Lärp") {
+    mod_description("Home Page") {
 
     int w, h;
     w = 800;
@@ -49,15 +49,21 @@ MainWindow::MainWindow()
     mod_description.set_use_markup();
     mod_description.set_wrap();
     mod_description.set_halign(Gtk::Align::START);
+    mod_description.set_valign(Gtk::Align::START);
+    mod_description.set_expand();
     
+    mod_description_scrollwindow.set_child(mod_description);
+    mod_description_scrollwindow.set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
+    mod_description_scrollwindow.set_expand();
+
     alltheshit_box.set_margin(10);
-    alltheshit_box.append(mod_description);
+    alltheshit_box.append(mod_description_scrollwindow);
 
     modlist_heading.set_use_markup();
     modlist_box.set_margin(10);
     modlist_box.append(modlist_heading);
-    modlist_scrollwindow.set_child(modlist_view);
 
+    modlist_scrollwindow.set_child(modlist_view);
     modlist_scrollwindow.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
     modlist_scrollwindow.set_expand();
 
@@ -69,9 +75,11 @@ MainWindow::MainWindow()
     }
     modlist_names = Gtk::StringList::create(modnames);
 
-    auto selection_model = Gtk::SingleSelection::create(modlist_names);
+    selection_model = Gtk::SingleSelection::create(modlist_names);
+    selection_model->signal_selection_changed().connect(sigc::mem_fun(*this, &MainWindow::on_selection_changed));
     selection_model->set_autoselect(false);
     selection_model->set_can_unselect(true);
+    selection_model->set_selected(GTK_INVALID_LIST_POSITION);
     modlist_view.set_model(selection_model);
     modlist_view.add_css_class("data-table");
     modlist_view.add_css_class("modlist-view-frame");
@@ -96,4 +104,12 @@ void MainWindow::on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item) {
     if (!label)
         return;
     label->set_text(modlist_names->get_string(pos));
+}
+
+void MainWindow::on_selection_changed(guint position, guint n_items) {
+    guint selected = selection_model->get_selected();
+    if (selected != GTK_INVALID_LIST_POSITION){
+        mod_description.set_text(Mods::mods[selected].get_long_description());
+        mod_description.set_use_markup();
+    }
 }

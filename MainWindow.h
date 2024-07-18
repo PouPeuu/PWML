@@ -18,6 +18,8 @@ class MainWindow : public Gtk::Window {
 		Gtk::ListView modlist_view;
 
 		Gtk::Box alltheshit_box;
+		Gtk::Paned othershit_separator;
+		Gtk::Box control_box;
 		Gtk::ScrolledWindow mod_description_scrollwindow;
 		Gtk::Label mod_description;
 

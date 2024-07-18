@@ -23,6 +23,7 @@ MainWindow::MainWindow()
 :   mainbox(Gtk::Orientation::HORIZONTAL),
     modlist_box(Gtk::Orientation::VERTICAL),
     alltheshit_box(Gtk::Orientation::VERTICAL),
+    control_box(Gtk::Orientation::HORIZONTAL),
     modlist_heading("<b>Mods:</b>", Gtk::Align::START),
     paned(Gtk::Orientation::HORIZONTAL),
     mod_description("Home Page") {
@@ -56,8 +57,13 @@ MainWindow::MainWindow()
     mod_description_scrollwindow.set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
     mod_description_scrollwindow.set_expand();
 
+    
+
     alltheshit_box.set_margin(10);
-    alltheshit_box.append(mod_description_scrollwindow);
+    alltheshit_box.append(othershit_separator);
+
+    othershit_separator.set_start_child(mod_description_scrollwindow);
+    othershit_separator.set_end_child(control_box);
 
     modlist_heading.set_use_markup();
     modlist_box.set_margin(10);
@@ -81,9 +87,9 @@ MainWindow::MainWindow()
     selection_model->set_can_unselect(true);
     selection_model->set_selected(GTK_INVALID_LIST_POSITION);
     modlist_view.set_model(selection_model);
+    modlist_view.set_expand();
     modlist_view.add_css_class("data-table");
     modlist_view.add_css_class("modlist-view-frame");
-    modlist_view.set_halign(Gtk::Align::START);
 
     auto factory = Gtk::SignalListItemFactory::create();
     factory->signal_setup().connect(
@@ -94,19 +100,27 @@ MainWindow::MainWindow()
 }
 
 void MainWindow::on_setup_label(const Glib::RefPtr<Gtk::ListItem>& list_item) {
+    auto box = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::HORIZONTAL);
+    box->set_expand();
+    auto checkbutton = Gtk::make_managed<Gtk::CheckButton>("");
     auto label = Gtk::make_managed<Gtk::Label>("", Gtk::Align::START);
     label->set_ellipsize(Pango::EllipsizeMode::END);
-    list_item->set_child(*label);
+
+    box->append(*checkbutton);
+    box->append(*label);
+    
+    list_item->set_child(*box);
 }
 
 void MainWindow::on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item) {
     auto pos = list_item->get_position();
     if (pos == GTK_INVALID_LIST_POSITION)
         return;
-    auto label = dynamic_cast<Gtk::Label*>(list_item->get_child());
-    if (!label)
+    auto box = dynamic_cast<Gtk::Box*>(list_item->get_child());
+    if (!box)
         return;
-    label->set_text(modlist_names->get_string(pos));
+    auto label = dynamic_cast<Gtk::Label*>(box->get_children()[1]);
+    label->set_text(" " + modlist_names->get_string(pos));
 }
 
 void MainWindow::on_selection_changed(guint position, guint n_items) {

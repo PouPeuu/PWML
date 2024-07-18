@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "Mods.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -62,7 +63,11 @@ MainWindow::MainWindow()
 
     modlist_box.append(modlist_scrollwindow);
     
-    modlist_names = Gtk::StringList::create({"bestmod", "Jurt's epic mod", "Heketiitus' vomit inducingly bad mod", "Industrialcrap"});
+    std::vector<Glib::ustring> modnames;
+    for (Mod mod : Mods::mods) {
+        modnames.push_back(mod.get_name());
+    }
+    modlist_names = Gtk::StringList::create(modnames);
 
     auto selection_model = Gtk::SingleSelection::create(modlist_names);
     selection_model->set_autoselect(false);

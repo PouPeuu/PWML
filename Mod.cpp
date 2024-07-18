@@ -15,3 +15,15 @@ Mod::Mod(std::filesystem::path path) {
 
     std::cout << "Path: " << this->modpath << "\nName: " << this->name << "\nShort Description: " << this->short_description << std::endl;
 }
+
+std::string Mod::get_name() {
+    return this->name;
+}
+
+std::string Mod::get_short_description() {
+    return this->short_description;
+}
+
+std::string Mod::get_long_description() {
+    return this->long_description;
+}

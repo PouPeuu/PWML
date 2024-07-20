@@ -2,9 +2,9 @@
 
 std::vector<Mod> Mods::mods = {};
 
-void Mods::load_from_folder(std::filesystem::path path) {
-    std::vector<std::filesystem::path> paths = Utils::list_files(path);
-    for (std::filesystem::path path : paths) {
+void Mods::load_from_folder(fs::path path) {
+    std::vector<fs::path> paths = Utils::list_files(path);
+    for (fs::path path : paths) {
         Mods::mods.push_back(Mod(path));
     }
 }
@@ -21,22 +21,25 @@ Mod Mods::get_mod(uint index) {
     return Mods::mods[index];
 }
 
-std::vector<std::string> dirs = {
-    "graphics",
-    "levels",
-    "music",
-    "objects",
-    "sound",
-    "weapons"
-};
-
 void Mods::apply_mods() {
+    const std::vector<std::string> dirs = {
+        "graphics",
+        "levels",
+        "music",
+        "objects",
+        "sound",
+        "weapons"
+    };
+    
     for (std::string directory : dirs) {
-        if (std::filesystem::exists(directory)) {
-            std::filesystem::remove_all(directory);
+        if (fs::exists(directory)) {
+            fs::remove_all(directory);
         }
-        std::filesystem::create_directory(directory);
+        fs::create_directory(directory);
+    }
 
-        
+    for (Mod mod : Mods::mods) {
+        if (mod.is_active())
+            mod.apply_mod();
     }
 }

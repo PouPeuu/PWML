@@ -7,7 +7,7 @@
 namespace Mods {
     extern std::vector<Mod> mods;
 
-    void load_from_folder(std::filesystem::path path);
+    void load_from_folder(fs::path path);
 
     void apply_mods();
 

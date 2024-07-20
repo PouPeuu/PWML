@@ -8,6 +8,9 @@ class MainWindow : public Gtk::Window {
 		void on_setup_label(const Glib::RefPtr<Gtk::ListItem>& list_item);
 		void on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item);
 		void on_selection_changed(guint position, guint n_items);
+		void on_apply_mods_clicked();
+
+		void update_active_mods();
 
 		Gtk::Box mainbox;
 		Gtk::Paned paned;
@@ -22,6 +25,8 @@ class MainWindow : public Gtk::Window {
 		Gtk::Box control_box;
 		Gtk::ScrolledWindow mod_description_scrollwindow;
 		Gtk::Label mod_description;
+
+		Gtk::Button apply_mods_button;
 
 		Glib::RefPtr<Gtk::StringList> modlist_names;
 		Glib::RefPtr<Gtk::SingleSelection> selection_model;

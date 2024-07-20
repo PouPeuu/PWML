@@ -2,7 +2,6 @@
 #define MOD_H
 
 #include "Utils.h"
-#include <nlohmann/json.hpp>
 #include <string>
 
 class Mod {

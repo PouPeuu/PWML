@@ -11,6 +11,7 @@ MainWindow::MainWindow()
     apply_mods_button("Apply"),
     modlist_heading("<b>Mods:</b>", Gtk::Align::START),
     paned(Gtk::Orientation::HORIZONTAL),
+    othershit_separator(Gtk::Orientation::VERTICAL),
     mod_description("Home Page") {
 
     int w, h;
@@ -31,6 +32,8 @@ MainWindow::MainWindow()
     paned.set_start_child(modlist_box);
     paned.set_end_child(alltheshit_box);
     paned.set_position(w/3);
+
+    othershit_separator.set_position((h/6)*5);
     
     mod_description.set_use_markup();
     mod_description.set_wrap();
@@ -46,6 +49,7 @@ MainWindow::MainWindow()
     alltheshit_box.append(othershit_separator);
     
     apply_mods_button.set_expand();
+    apply_mods_button.set_margin(10);
     apply_mods_button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_apply_mods_clicked));
     control_box.append(apply_mods_button);
 
@@ -108,6 +112,10 @@ void MainWindow::on_bind_name(const Glib::RefPtr<Gtk::ListItem>& list_item) {
         return;
     auto label = dynamic_cast<Gtk::Label*>(box->get_children()[1]);
     label->set_text(" " + modlist_names->get_string(pos));
+    if (Mods::get_mod(pos).get_id() == "vanilla") {
+        auto checkbutton = dynamic_cast<Gtk::CheckButton*>(box->get_children()[0]);
+        checkbutton->set_active();
+    }
 }
 
 void MainWindow::on_selection_changed(guint position, guint n_items) {

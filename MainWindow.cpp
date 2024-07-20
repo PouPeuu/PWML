@@ -145,4 +145,10 @@ void MainWindow::update_active_mods() {
 void MainWindow::on_apply_mods_clicked() {
     update_active_mods();
     Mods::apply_mods();
+    if (!dialog)
+        dialog = Gtk::AlertDialog::create();
+    
+    dialog->set_buttons({"Ok"});
+    dialog->set_message("Finished applying mods");
+    dialog->show(*this);
 }

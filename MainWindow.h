@@ -30,6 +30,7 @@ class MainWindow : public Gtk::Window {
 
 		Glib::RefPtr<Gtk::StringList> modlist_names;
 		Glib::RefPtr<Gtk::SingleSelection> selection_model;
+		Glib::RefPtr<Gtk::AlertDialog> dialog;
 	public:
 		MainWindow();
 };

@@ -108,7 +108,6 @@ void Mod::apply_mod() {
                     for (auto j : fromweapons) {
                         bool contains = false;
                         for (auto k : toweapons) {
-                            printf("%s, %s", j["name", k["name"]]);
                             if (j["name"] == k["name"]) {
                                 contains = true;
                                 break;

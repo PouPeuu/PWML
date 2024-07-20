@@ -2,22 +2,20 @@
 
 using json = nlohmann::json;
 
-Mod::Mod(std::filesystem::path path) {
+Mod::Mod(fs::path path) {
     this->active = false;
     this->modpath = path;
     this->id = path.filename();
-    std::cout << id << std::endl;
+    fs::path metadata_path = path / "metadata.json";
+    fs::path description_path = path / "description.pml";
 
-    std::filesystem::path metadata_path = path / "metadata.json";
-    std::filesystem::path description_path = path / "description.pml";
-
-    if (std::filesystem::exists(metadata_path)){
+    if (fs::exists(metadata_path)){
         json modjson = json::parse(Utils::read_file(metadata_path));
         this->name = modjson["name"];
         this->short_description = modjson["short_description"];
     }
     
-    if (std::filesystem::exists(description_path)) {
+    if (fs::exists(description_path)) {
         this->long_description = Utils::read_file(description_path);
     }
 
@@ -49,5 +47,13 @@ void Mod::set_active(bool active = true) {
 }
 
 void Mod::apply_mod() {
-    
+    if (fs::exists(modpath / "graphics")) {
+        for (fs::path path : fs::directory_iterator(modpath / "graphics")) {
+            if (path.filename() != "Graphics.xml") {
+                fs::copy(path, "graphics");
+            } else {
+                Utils::clone_xml(path, "graphics/Graphics.xml", "graphics");
+            }
+        }
+    }
 }

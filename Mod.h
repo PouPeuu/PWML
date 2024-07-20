@@ -10,12 +10,12 @@ class Mod {
         bool active;
 
         std::string id;
-        std::filesystem::path modpath;
+        fs::path modpath;
         std::string name;
         std::string short_description;
         std::string long_description;
     public:
-        Mod(std::filesystem::path path);
+        Mod(fs::path path);
 
         std::string get_id();
         std::string get_name();

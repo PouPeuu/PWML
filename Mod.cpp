@@ -5,6 +5,8 @@ using json = nlohmann::json;
 Mod::Mod(std::filesystem::path path) {
     this->active = false;
     this->modpath = path;
+    this->id = path.filename();
+    std::cout << id << std::endl;
 
     std::filesystem::path metadata_path = path / "metadata.json";
     std::filesystem::path description_path = path / "description.pml";
@@ -20,6 +22,10 @@ Mod::Mod(std::filesystem::path path) {
     }
 
     //std::cout << "Path: " << this->modpath << "\nName: " << this->name << "\nShort Description: " << this->short_description << std::endl;
+}
+
+std::string Mod::get_id() {
+    return this->id;
 }
 
 std::string Mod::get_name() {
@@ -40,4 +46,8 @@ bool Mod::is_active() {
 
 void Mod::set_active(bool active = true) {
     this->active = active;
+}
+
+void Mod::apply_mod() {
+    
 }

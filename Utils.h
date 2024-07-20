@@ -25,6 +25,8 @@ namespace Utils {
     void clone_xml(fs::path from, fs::path to, std::string root_name);
 
     template <typename T>
-    bool vector_contains(std::vector<T> vector, T value);
+    bool vector_contains(std::vector<T> vector, T value) {
+        return std::find(vector.begin(), vector.end(), value) != vector.end();
+    }
 }
 #endif

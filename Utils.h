@@ -8,6 +8,10 @@
 #include <filesystem>
 #include <vector>
 #include <tinyxml2.h>
+#include <nlohmann/json.hpp>
+#include <algorithm>
+
+using json = nlohmann::json;
 
 namespace xml = tinyxml2;
 
@@ -19,5 +23,8 @@ namespace Utils {
     std::vector<fs::path> list_files(fs::path filepath);
     fs::path get_executable_dir();
     void clone_xml(fs::path from, fs::path to, std::string root_name);
+
+    template <typename T>
+    bool vector_contains(std::vector<T> vector, T value);
 }
 #endif

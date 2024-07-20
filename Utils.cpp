@@ -62,6 +62,11 @@ void Utils::clone_xml(fs::path from, fs::path to, std::string root_name) {
     xml::XMLError result = todoc.SaveFile(to.string().c_str());
 }
 
+template <typename T>
+bool Utils::vector_contains(std::vector<T> vector, T value) {
+    return std::find(vector.begin(), vector.end(), value) != vector.end();
+}
+
 
 
 #if defined(_WIN32)

@@ -7,6 +7,8 @@
 
 class Mod {
     private:
+        bool active;
+
         std::filesystem::path modpath;
         std::string name;
         std::string short_description;
@@ -17,6 +19,9 @@ class Mod {
         std::string get_name();
         std::string get_short_description();
         std::string get_long_description();
+
+        bool is_active();
+        void set_active(bool active = true);
 };
 
 #endif

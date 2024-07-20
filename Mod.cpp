@@ -3,6 +3,7 @@
 using json = nlohmann::json;
 
 Mod::Mod(std::filesystem::path path) {
+    this->active = false;
     this->modpath = path;
 
     std::filesystem::path metadata_path = path / "metadata.json";
@@ -18,7 +19,7 @@ Mod::Mod(std::filesystem::path path) {
         this->long_description = Utils::read_file(description_path);
     }
 
-    std::cout << "Path: " << this->modpath << "\nName: " << this->name << "\nShort Description: " << this->short_description << std::endl;
+    //std::cout << "Path: " << this->modpath << "\nName: " << this->name << "\nShort Description: " << this->short_description << std::endl;
 }
 
 std::string Mod::get_name() {
@@ -31,4 +32,12 @@ std::string Mod::get_short_description() {
 
 std::string Mod::get_long_description() {
     return this->long_description;
+}
+
+bool Mod::is_active() {
+    return this->active;
+}
+
+void Mod::set_active(bool active = true) {
+    this->active = active;
 }

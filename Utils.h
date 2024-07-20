@@ -15,6 +15,7 @@ namespace fs = std::filesystem;
 
 namespace Utils {
     std::string read_file(fs::path filepath);
+    void write_file(fs::path filepath, std::string contents);
     std::vector<fs::path> list_files(fs::path filepath);
     fs::path get_executable_dir();
     void clone_xml(fs::path from, fs::path to, std::string root_name);

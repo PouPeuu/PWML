@@ -16,6 +16,18 @@ std::string Utils::read_file(fs::path filepath) {
     return contents;
 }
 
+void Utils::write_file(fs::path filepath, std::string contents) {
+    std::ofstream file(filepath);
+
+    if (!file.is_open()) {
+        std::cerr << "Error opening file " << filepath << std::endl;
+        return;
+    }
+
+    file << contents;
+    file.close();
+}
+
 std::vector<fs::path> Utils::list_files(fs::path path) {
     std::vector<fs::path> paths;
     try {

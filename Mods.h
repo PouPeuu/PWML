@@ -13,5 +13,7 @@ namespace Mods {
 
     void set_mod_active(uint index, bool active);
     bool is_mod_active(uint index);
+
+    Mod get_mod(uint index);
 }
 #endif

@@ -21,7 +21,7 @@ class Mod {
         std::string get_long_description();
 
         bool is_active();
-        void set_active(bool active = true);
+        void set_active(bool active);
 };
 
 #endif
